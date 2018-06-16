@@ -1,8 +1,11 @@
 package com.ubs.opsit.interviews;
 
+import com.ubs.opsit.interviews.TimeConverter;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Test;
+import java.lang.Exception.*;
+import com.ubs.opsit.interviews.BerlinUHRClock;
 
 import static com.ubs.opsit.interviews.support.BehaviouralTestEmbedder.aBehaviouralTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class BerlinClockFixture {
 
-    private TimeConverter berlinClock;
+    private BerlinUHRClock berlinClock=new BerlinUHRClock();
     private String theTime;
 
     @Test
@@ -28,9 +31,21 @@ public class BerlinClockFixture {
     public void whenTheTimeIs(String time) {
         theTime = time;
     }
-
+	
     @Then("the clock should look like $")
     public void thenTheClockShouldLookLike(String theExpectedBerlinClockOutput) {
         assertThat(berlinClock.convertTime(theTime)).isEqualTo(theExpectedBerlinClockOutput);
+    }
+    
+    @Then("the time is invalid")
+    public void whenInvalidTime() {
+    	try{
+			berlinClock.convertTime(theTime);			
+		}
+		catch(Exception e)
+		{
+			if(e.getMessage()=="Invalid Time Format")
+				assertThat(true);
+		}
     }
 }
