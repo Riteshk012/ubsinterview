@@ -44,5 +44,18 @@ RRRR
 OOOOOOOOOOO
 OOOO
 
+Scenario: Invalid Time Exception Handled
+When the time is 25:10:10
+Then the time is invalid
 
+Scenario: Invalid Time Exception Handled
+When the time is 24:10:10
+Then the time is invalid
 
+Scenario: Invalid Time Exception Handled
+When the time is aa:aa:aa
+Then the time is invalid
+
+Scenario: Invalid Time Exception Handled
+When the time is aa;aa;aa
+Then the time is invalid
